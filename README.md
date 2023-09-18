@@ -12,6 +12,10 @@ En este proyecto, aplicamos el enfoque de Domain-Driven Design (DDD) para estruc
 
 La arquitectura de este proyecto se basa en el paradigma de microservicios. Cada componente, como el servicio de usuarios, roles y módulos, se implementa como un microservicio independiente. Esto promueve la modularidad, escalabilidad y permite un desarrollo y despliegue ágil.
 
+## Arquitectura
+
+![Implementación Microservicios EverGreen-Arquitectura ADM](https://github.com/julianfrancor/evergreen-microservices/assets/53787841/728473b6-175d-4b2d-b8f7-0c67ccf7f4da)
+
 ## Equipo
 
 - Julian Franco
