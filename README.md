@@ -1,39 +1,44 @@
-# Proyecto de Administración de la Plataforma EverGreen
+# EverGreen Platform Management Project
 
-## Introducción
+## Introduction
 
-Este proyecto se centra en el desarrollo de una aplicación para la administración de la plataforma de la empresa EverGreen. EverGreen se dedica a la gestión de AgroCadenas a través de tecnologías avanzadas como IoT, Inteligencia Artificial, Drones y Sensores.
+This project focuses on developing an application for managing the EverGreen company's platform. EverGreen specializes in managing AgroChains through advanced technologies such as IoT, Artificial Intelligence, Drones, and Sensors.
 
-## Dominio-Driven Design (DDD)
+## Domain-Driven Design (DDD)
 
-En este proyecto, aplicamos el enfoque de Domain-Driven Design (DDD) para estructurar la arquitectura del sistema. DDD se centra en comprender y resolver problemas complejos del dominio del negocio, lo cual nos permite tomar decisiones de diseño informadas y crear un software que se alinee de manera efectiva con los objetivos de la empresa.
+In this project, we apply the Domain-Driven Design (DDD) approach to structure the system's architecture. DDD focuses on understanding and solving complex business domain problems, allowing us to make informed design decisions and create software that effectively aligns with the company's objectives.
 
-## Microservicios
+## Microservices
 
-La arquitectura de este proyecto se basa en el paradigma de microservicios. Cada componente, como el servicio de usuarios, roles y módulos, se implementa como un microservicio independiente. Esto promueve la modularidad, escalabilidad y permite un desarrollo y despliegue ágil.
+The architecture of this project is based on the microservices paradigm. Each component, such as the user service, roles, and modules, is implemented as an independent microservice. This promotes modularity, scalability, and enables agile development and deployment.
 
-## Equipo
+## Arquitectura
+
+![Implementación Microservicios EverGreen-Arquitectura ADM](https://github.com/julianfrancor/evergreen-microservices/assets/53787841/728473b6-175d-4b2d-b8f7-0c67ccf7f4da)
+
+
+## Team
 
 - Julian Franco
 - Victor Muñoz
 - David Roldán
 
-## Asignatura: Arquitecturas Avanzadas de Software
+## Course: Advanced Software Architectures
 
-Este proyecto se desarrolla como parte de la asignatura "Arquitecturas Avanzadas de Software". Con el fin de obtener las herramientas y conocimientos necesarios para diseñar y desarrollar sistemas de software de alta complejidad.
-## Entidades de Dominio
+This project is developed as part of the "Advanced Software Architectures" course. The aim is to acquire the necessary tools and knowledge to design and develop high-complexity software systems.
 
-Hemos identificado tres entidades de dominio clave para este proyecto:
+## Domain Entities
 
-1. **Usuario (User):** Representa los usuarios que interactúan con la plataforma EverGreen. Cada usuario tiene roles y puede acceder a distintos módulos.
+We have identified three key domain entities for this project:
 
-2. **Módulo (Module):** Refiere a las funcionalidades y características específicas que componen la plataforma. Cada módulo tiene distintos permisos de acceso asociados.
+1. **User:** Represents the users who interact with the EverGreen platform. Each user has roles and can access different modules.
 
-3. **Rol (Role):** Define los roles o perfiles de usuario, determinando qué acciones pueden realizar y a qué módulos tienen acceso.
+2. **Module:** Refers to the specific functionalities and features that make up the platform. Each module has different associated access permissions.
 
-Estas entidades forman la base de la lógica de negocio y guían la estructura y funcionalidades de nuestra aplicación.
+3. **Role:** Defines the user roles or profiles, determining what actions they can perform and which modules they have access to.
+
+These entities form the basis of the business logic and guide the structure and functionalities of our application.
 
 ---
 
-*Nota: Este README proporciona una visión general del proyecto y sus principales aspectos. A medida que el proyecto evolucione, se añadirán más detalles y documentación adicional según sea necesario.*
-
+*Note: This README provides an overview of the project and its main aspects. As the project evolves, more details and additional documentation will be added as needed.*
