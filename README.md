@@ -36,3 +36,4 @@ Estas entidades forman la base de la lógica de negocio y guían la estructura y
 ---
 
 *Nota: Este README proporciona una visión general del proyecto y sus principales aspectos. A medida que el proyecto evolucione, se añadirán más detalles y documentación adicional según sea necesario.*
+
