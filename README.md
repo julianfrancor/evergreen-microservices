@@ -79,6 +79,13 @@ Before you begin, make sure you have the following installed on your system:
 7. Stopping the Server
   To stop the server, press CTRL+C in the terminal where the server is running.
 
+8. Deactivating the Virtual Environment
+  When you're done working on the project, you can deactivate the virtual environment:
+
+  ```
+  deactivate
+  ```
+
 ---
 
 *Note: This README provides an overview of the project and its main aspects. As the project evolves, more details and additional documentation will be added as needed.*
