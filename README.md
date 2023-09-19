@@ -38,6 +38,47 @@ We have identified three key domain entities for this project:
 
 These entities form the basis of the business logic and guide the structure and functionalities of our application.
 
+## Running the Project
+
+To run the EverGreen Platform Management Project, follow these steps:
+
+### Prerequisites
+
+Before you begin, make sure you have the following installed on your system:
+
+- [Python](https://www.python.org/downloads/) (3.7 or higher)
+- [pip](https://pip.pypa.io/en/stable/installing/) (Python package manager)
+
+### Setting Up the Backend
+
+1. Navigate to the project's root directory in your terminal.
+
+2. Create a virtual environment (optional but recommended):
+
+  ```
+  python -m venv venv
+  ```
+3. Activate the virtual environment (On macOS and Linux):
+
+  ```
+  source venv/bin/activate
+  ```
+4. Install the project dependencies using pip:
+  
+  ```
+  pip install -r requirements.txt
+  ```
+5. Running the Backend
+
+  ```
+  uvicorn main:app --reload
+  ```
+6. Accessing the Project
+  You can access the project's API by opening a web browser or using API testing tools like Postman or curl. The API endpoints and documentation can be found at http://127.0.0.1:8000/docs for interactive documentation.
+
+7. Stopping the Server
+  To stop the server, press CTRL+C in the terminal where the server is running.
+
 ---
 
 *Note: This README provides an overview of the project and its main aspects. As the project evolves, more details and additional documentation will be added as needed.*
