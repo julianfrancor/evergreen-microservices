@@ -7,8 +7,13 @@ class UserService:
         self.user_repository = UserRepository()
 
     def create_user(self, username, email, full_name):
-        user = User(username, email, full_name)
-        return self.user_repository.create_user(user)
+        print("==========" + "HOLA1" + "==========")
+        existing_user = self.user_repository.get_user_by_email(email)
+        if existing_user:
+            return None
+        user = User(username=username, email=email, full_name=full_name)
+        self.user_repository.create_user(user)
+        return user
 
     def get_user(self, user_id):
         return self.user_repository.get_user(user_id)
