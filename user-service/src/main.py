@@ -8,6 +8,7 @@ from models.user import User as UserModel
 from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
 from middlewares.jwt_bearer import JWTBearer
+import random
 
 app = FastAPI()
 app.title = "Mi aplicación con  FastAPI"
@@ -30,6 +31,7 @@ class User(BaseModel):
     user_type: str = Field(min_length=2, max_length=20)
     password: str = Field(min_length=8, max_length=50)
     status: str = Field(min_length=2, max_length=20)
+    photo: Optional[str] = None
 
     class Config:
         schema_extra = {
@@ -40,7 +42,8 @@ class User(BaseModel):
                 "last_name": "Doe",
                 "user_type": "admin",
                 "password": "example_password",
-                "status": "active"
+                "status": "active",
+                "photo": "https://rickandmortyapi.com/api/character/avatar/361.jpeg"
             }
         }
 
@@ -81,6 +84,8 @@ def get_users_by_status(status: str = Query(min_length=5, max_length=20)) -> Lis
 @app.post('/users', tags=['users'], response_model=dict, status_code=201)
 def create_user(user: User) -> dict:
     db = Session()
+    random_image_number = random.randint(1, 825)
+    user.photo = f"https://rickandmortyapi.com/api/character/avatar/{random_image_number}.jpeg"
     new_user = UserModel(**user.dict())
     db.add(new_user)
     db.commit()
