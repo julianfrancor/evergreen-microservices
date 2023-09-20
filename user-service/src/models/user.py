@@ -10,3 +10,4 @@ class User(Base):
     user_type = Column(String)
     password = Column(String)
     status = Column(String)
+    photo = Column(String) 
