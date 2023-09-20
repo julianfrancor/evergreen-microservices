@@ -4,13 +4,13 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from jwt_manager import create_token, validate_token
 from config.database import Session, engine, Base
-from models.movie import Movie as MovieModel
+from models.module import Module as ModuleModel
 from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
 from middlewares.jwt_bearer import JWTBearer
 
 app = FastAPI()
-app.title = "Mi aplicación con  FastAPI"
+app.title = "Module Microserivice"
 app.version = "0.0.1"
 
 app.add_middleware(ErrorHandler)
@@ -22,48 +22,25 @@ class User(BaseModel):
     email:str
     password:str
 
-class Movie(BaseModel):
+class Module(BaseModel):
     id: Optional[int] = None
-    title: str = Field(min_length=5, max_length=15)
-    overview: str = Field(min_length=15, max_length=50)
-    year: int = Field(le=2022)
-    rating:float = Field(ge=1, le=10)
-    category:str = Field(min_length=5, max_length=15)
+    name: str = Field(min_length=5, max_length=15)
+    description: str = Field(min_length=15, max_length=50)
+    module_type: str = Field(min_length=15, max_length=50)
 
     class Config:
         schema_extra = {
             "example": {
                 "id": 1,
-                "title": "Mi película",
-                "overview": "Descripción de la película",
-                "year": 2022,
-                "rating": 9.8,
-                "category" : "Acción"
+                "name": "Module_test",
+                "description": "Descripción del modulo",
+                "module_type": "Finance"
             }
         }
 
-movies = [
-    {
-		"id": 1,
-		"title": "Avatar",
-		"overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que ...",
-		"year": "2009",
-		"rating": 7.8,
-		"category": "Acción"
-	},
-    {
-		"id": 2,
-		"title": "Avatar",
-		"overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que ...",
-		"year": "2009",
-		"rating": 7.8,
-		"category": "Acción"
-	}
-]
-
 @app.get('/', tags=['home'])
 def message():
-    return HTMLResponse('<h1>Hello world</h1>')
+    return HTMLResponse('<h1>Hello world from Module</h1>')
 
 
 @app.post('/login', tags=['auth'])
@@ -72,54 +49,54 @@ def login(user: User):
         token: str = create_token(user.dict())
         return JSONResponse(status_code=200, content=token)
 
-@app.get('/movies', tags=['movies'], response_model=List[Movie], status_code=200, dependencies=[Depends(JWTBearer())])
-def get_movies() -> List[Movie]:
+@app.get('/modules', tags=['modules'], response_model=List[Module], status_code=200, dependencies=[Depends(JWTBearer())])
+def get_modules() -> List[Module]:
     db = Session()
-    result = db.query(MovieModel).all()
+    result = db.query(ModuleModel).all()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-@app.get('/movies/{id}', tags=['movies'], response_model=Movie)
-def get_movie(id: int = Path(ge=1, le=2000)) -> Movie:
+@app.get('/modules/{id}', tags=['modules'], response_model=Module)
+def get_module(id: int = Path(ge=1, le=2000)) -> Module:
     db = Session()
-    result = db.query(MovieModel).filter(MovieModel.id == id).first()
+    result = db.query(ModuleModel).filter(ModuleModel.id == id).first()
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-@app.get('/movies/', tags=['movies'], response_model=List[Movie])
-def get_movies_by_category(category: str = Query(min_length=5, max_length=15)) -> List[Movie]:
+@app.get('/modules/', tags=['modules'], response_model=List[Module])
+def get_modules_by_category(category: str = Query(min_length=5, max_length=15)) -> List[Module]:
     db = Session()
-    result = db.query(MovieModel).filter(MovieModel.category == category).all()
+    result = db.query(ModuleModel).filter(ModuleModel.category == category).all()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-@app.post('/movies', tags=['movies'], response_model=dict, status_code=201)
-def create_movie(movie: Movie) -> dict:
+@app.post('/modules', tags=['modules'], response_model=dict, status_code=201)
+def create_module(module: Module) -> dict:
     db = Session()
-    new_movie = MovieModel(**movie.dict())
-    db.add(new_movie)
+    new_module = ModuleModel(**module.dict())
+    db.add(new_module)
     db.commit()
-    return JSONResponse(status_code=201, content={"message": "Se ha registrado la película"})
+    return JSONResponse(status_code=201, content={"message": "Se ha registrado el módulo"})
 
-@app.put('/movies/{id}', tags=['movies'], response_model=dict, status_code=200)
-def update_movie(id: int, movie: Movie)-> dict:
+@app.put('/modules/{id}', tags=['modules'], response_model=dict, status_code=200)
+def update_module(id: int, module: Module)-> dict:
     db = Session()
-    result = db.query(MovieModel).filter(MovieModel.id == id).first()
+    result = db.query(ModuleModel).filter(ModuleModel.id == id).first()
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
-    result.title = movie.title
-    result.overview = movie.overview
-    result.year = movie.year
-    result.rating = movie.rating
-    result.category = movie.category
+    result.title = module.title
+    result.overview = module.overview
+    result.year = module.year
+    result.rating = module.rating
+    result.category = module.category
     db.commit()
-    return JSONResponse(status_code=200, content={"message": "Se ha modificado la película"})
+    return JSONResponse(status_code=200, content={"message": "Se ha modificado el módulo"})
 
-@app.delete('/movies/{id}', tags=['movies'], response_model=dict, status_code=200)
-def delete_movie(id: int)-> dict:
+@app.delete('/modules/{id}', tags=['modules'], response_model=dict, status_code=200)
+def delete_module(id: int)-> dict:
     db = Session()
-    result = db.query(MovieModel).filter(MovieModel.id == id).first()
+    result = db.query(ModuleModel).filter(ModuleModel.id == id).first()
     if not result:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     db.delete(result)
     db.commit()
-    return JSONResponse(status_code=200, content={"message": "Se ha eliminado la película"})
+    return JSONResponse(status_code=200, content={"message": "Se ha eliminado el módulo"})
