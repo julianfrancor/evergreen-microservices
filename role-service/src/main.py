@@ -4,13 +4,13 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from jwt_manager import create_token, validate_token
 from config.database import Session, engine, Base
-from models.movie import Movie as MovieModel
+from models.role import Role as RoleModel
 from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
 from middlewares.jwt_bearer import JWTBearer
 
 app = FastAPI()
-app.title = "Mi aplicación con  FastAPI"
+app.title = "Role - Service"
 app.version = "0.0.1"
 
 app.add_middleware(ErrorHandler)
@@ -22,60 +22,34 @@ class User(BaseModel):
     email:str
     password:str
 
-class Movie(BaseModel):
+class Roles(BaseModel):
     id: Optional[int] = None
-    title: str = Field(min_length=5, max_length=15)
-    overview: str = Field(min_length=15, max_length=50)
-    year: int = Field(le=2022)
-    rating:float = Field(ge=1, le=10)
-    category:str = Field(min_length=5, max_length=15)
+    rol: str = Field(min_length=5, max_length=15)
 
     class Config:
         schema_extra = {
             "example": {
                 "id": 1,
-                "title": "Mi película",
-                "overview": "Descripción de la película",
-                "year": 2022,
-                "rating": 9.8,
-                "category" : "Acción"
+                "rol": "Role name",
             }
         }
 
-movies = [
-    {
-		"id": 1,
-		"title": "Avatar",
-		"overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que ...",
-		"year": "2009",
-		"rating": 7.8,
-		"category": "Acción"
-	},
-    {
-		"id": 2,
-		"title": "Avatar",
-		"overview": "En un exuberante planeta llamado Pandora viven los Na'vi, seres que ...",
-		"year": "2009",
-		"rating": 7.8,
-		"category": "Acción"
-	}
-]
 
-@app.get('/', tags=['home'])
+@app.get('/', tags=['Role'])
 def message():
     return HTMLResponse('<h1>Hello world</h1>')
 
 
-@app.post('/login', tags=['auth'])
+@app.post('/login', tags=['Auth'])
 def login(user: User):
     if user.email == "admin@gmail.com" and user.password == "admin":
         token: str = create_token(user.dict())
         return JSONResponse(status_code=200, content=token)
 
-@app.get('/movies', tags=['movies'], response_model=List[Movie], status_code=200, dependencies=[Depends(JWTBearer())])
-def get_movies() -> List[Movie]:
+@app.get('/roles', tags=['roles'], response_model=List[Role], status_code=200, dependencies=[Depends(JWTBearer())])
+def get_movies() -> List[Role]:
     db = Session()
-    result = db.query(MovieModel).all()
+    result = db.query(RoleModel).all()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @app.get('/movies/{id}', tags=['movies'], response_model=Movie)
