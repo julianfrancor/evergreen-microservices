@@ -1,4 +1,4 @@
-from config.database import Base
+from config.module_database import Base
 from sqlalchemy import Column, Integer, String, Float
 
 class Module(Base):

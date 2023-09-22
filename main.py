@@ -7,17 +7,20 @@ from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
 from routes.auth import auth_router
 from routes.user import user_router
+from routes.module import module_router
 
 app = FastAPI()
 app.title = "Evergreen"
 app.version = "0.0.1"
+app.port = 8001
 
 app.add_middleware(ErrorHandler)
 app.include_router(user_router)
 app.include_router(auth_router)
+app.include_router(module_router)
 
 
 
-@app.get('/', tags=['home'])
+@app.get('/', tags=['Home'])
 def message():
     return HTMLResponse('<h1>Hello world</h1>')

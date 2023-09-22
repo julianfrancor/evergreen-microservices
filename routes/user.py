@@ -10,24 +10,20 @@ from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
 from middlewares.jwt_bearer import JWTBearer
 from schemas.user_scheme import User
+import random
 
 user_router = APIRouter()
 
 Base.metadata.create_all(bind=engine)
 
-@user_router.post('/login', tags=['auth'])
-def login(user: User):
-    if user.email == "admin@gmail.com" and user.password == "admin":
-        token: str = create_token(user.dict())
-        return JSONResponse(status_code=200, content=token)
 
-@user_router.get('/users', tags=['users'], response_model=List[User], status_code=200)
+@user_router.get('/users', tags=['Users'], response_model=List[User], status_code=200)
 def get_users() -> List[User]:
     db = Session()
     result = db.query(UserModel).all()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-@user_router.get('/users/{id}', tags=['users'], response_model=User)
+@user_router.get('/users/{id}', tags=['Users'], response_model=User)
 def get_user(id: int = Path(ge=1, le=2000)) -> User:
     db = Session()
     result = db.query(UserModel).filter(UserModel.id == id).first()
@@ -35,14 +31,14 @@ def get_user(id: int = Path(ge=1, le=2000)) -> User:
         return JSONResponse(status_code=404, content={'message': "Usuario no encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-@user_router.get('/users/', tags=['users'], response_model=List[User])
+@user_router.get('/users/', tags=['Users'], response_model=List[User])
 def get_users_by_status(status: str = Query(min_length=5, max_length=20)) -> List[User]:
     db = Session()
     result = db.query(UserModel).filter(UserModel.status == status).all()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@user_router.post('/users', tags=['users'], response_model=dict, status_code=201)
+@user_router.post('/users', tags=['Users'], response_model=dict, status_code=201)
 def create_user(user: User) -> dict:
     db = Session()
     random_image_number = random.randint(1, 825)
@@ -52,7 +48,7 @@ def create_user(user: User) -> dict:
     db.commit()
     return JSONResponse(status_code=201, content={"message": "Se ha registrado el usuario"})
 
-@user_router.put('/users/{id}', tags=['users'], response_model=dict, status_code=200)
+@user_router.put('/users/{id}', tags=['Users'], response_model=dict, status_code=200)
 def update_user(id: int, user: User)-> dict:
     db = Session()
     result = db.query(UserModel).filter(UserModel.id == id).first()
@@ -67,7 +63,7 @@ def update_user(id: int, user: User)-> dict:
     db.commit()
     return JSONResponse(status_code=200, content={"message": "Se ha modificado el usuario"})
 
-@user_router.delete('/users/{id}', tags=['users'], response_model=dict, status_code=200)
+@user_router.delete('/users/{id}', tags=['Users'], response_model=dict, status_code=200)
 def delete_user(id: int)-> dict:
     db = Session()
     result = db.query(UserModel).filter(UserModel.id == id).first()
