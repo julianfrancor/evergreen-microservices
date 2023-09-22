@@ -8,6 +8,7 @@ from middlewares.error_handler import ErrorHandler
 from routes.auth import auth_router
 from routes.user import user_router
 from routes.module import module_router
+from routes.role import role_router
 
 app = FastAPI()
 app.title = "Evergreen"
@@ -18,6 +19,7 @@ app.add_middleware(ErrorHandler)
 app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(module_router)
+app.include_router(role_router)
 
 
 

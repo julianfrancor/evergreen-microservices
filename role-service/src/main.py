@@ -25,26 +25,19 @@ class User(BaseModel):
 class Roles(BaseModel):
     id: Optional[int] = None
     rol: str = Field(min_length=5, max_length=15)
+    description: str = Field(min_length=3, max_length=50)
+
 
     class Config:
         schema_extra = {
             "example": {
                 "id": 1,
                 "rol": "Role name",
+                "description": "Role description"
             }
         }
 
 
-@app.get('/', tags=['Role'])
-def message():
-    return HTMLResponse('<h1>Hello world</h1>')
-
-
-@app.post('/login', tags=['Auth'])
-def login(user: User):
-    if user.email == "admin@gmail.com" and user.password == "admin":
-        token: str = create_token(user.dict())
-        return JSONResponse(status_code=200, content=token)
 
 @app.get('/roles', tags=['roles'], response_model=List[Role], status_code=200, dependencies=[Depends(JWTBearer())])
 def get_movies() -> List[Role]:

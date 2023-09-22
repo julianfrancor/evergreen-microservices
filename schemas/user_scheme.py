@@ -14,13 +14,11 @@ class User(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "id": 1,
                 "username": "example_username",
                 "name": "John",
                 "last_name": "Doe",
                 "user_type": "admin",
                 "password": "example_password",
                 "status": "active",
-                "photo": "https://rickandmortyapi.com/api/character/avatar/361.jpeg"
             }
         }

@@ -1,4 +1,4 @@
-from config.database import Base
+from config.role_database import Base
 from sqlalchemy import Column, Integer, String, Float
 
 class Role(Base):
