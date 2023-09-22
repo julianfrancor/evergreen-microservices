@@ -37,10 +37,8 @@ def get_role(id: int = Path(ge=1, le=2000)) -> Role:
         return JSONResponse(status_code=404, content={'message': "No encontrado"})
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-
-
 @role_router.put('/role/{id}', tags=['Role'], response_model=dict, status_code=200)
-def update_movie(id: int, role: Role)-> dict:
+def update_role(id: int, role: Role)-> dict:
     db = Session()
     result = db.query(RoleModel).filter(RoleModel.id == id).first()
     if not result:
@@ -51,7 +49,7 @@ def update_movie(id: int, role: Role)-> dict:
     return JSONResponse(status_code=200, content={"message": "the role was successfully modified"})
 
 @role_router.delete('/role/{id}', tags=['Role'], response_model=dict, status_code=200)
-def delete_movie(id: int)-> dict:
+def delete_role(id: int)-> dict:
     db = Session()
     result = db.query(RoleModel).filter(RoleModel.id == id).first()
     if not result:

@@ -2,7 +2,7 @@
 
 FROM python:3.11
 
-WORKDIR /code
+WORKDIR /evergreen-microservices
 
 COPY requirements.txt .
 
